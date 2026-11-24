@@ -1,0 +1,80 @@
+name: 유지보수 작업
+description: 에이전트가 작업을 시작하는 데 필요한 6개 항목을 담은 유지보수 계약서
+title: "[유지보수] "
+labels: ["maintenance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        이 Issue는 작업 하나의 **원본(SSOT)**이다. 목적·범위·완료 조건이 바뀌면 이 Issue를 고친다.
+        도메인(`docs/01-requirements.md`)·아키텍처(`docs/06-architecture.md`) 원본과 충돌하면 에이전트는 `NEEDS_HUMAN`을 선언하고 멈춘다.
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 1. 배경
+      description: 왜 필요한가
+      placeholder: |
+        예) 발송 상세 화면의 경과일이 목록 화면과 다르게 계산되어 담당자가 지연 여부를 헷갈린다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: change
+    attributes:
+      label: 2. 변경할 내용
+      description: |
+        무엇을 수정하는가.
+        예) `src/app/transfers/[id]/page.tsx`의 경과일 계산을 목록과 같은 헬퍼로 바꾼다
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: 3. 종료 조건
+      description: |
+        무엇이 참이면 완료인가. 확인 가능한 문장으로 적는다.
+        예) `- [ ] 같은 발송 건의 경과일이 목록과 상세에서 같다`
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: 4. 기계 검증
+      description: |
+        어떤 테스트가 판정하는가 (기준은 docs/harness/VerifyRule.md).
+        3번 종료 조건을 판정하는 테스트를 `tests/issues/issue-{Issue 번호}-{기능명}.test.ts`에 만든다. 종료 조건 하나당 테스트 케이스 하나를 둔다.
+        예) `tests/issues/issue-12-transfer-elapsed-days.test.ts`
+      value: |
+        - [ ] 판정 테스트: `tests/issues/issue-{Issue 번호}-{기능명}.test.ts`
+        - [ ] `npm run verify` exit 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: do-not-touch
+    attributes:
+      label: 5. 건드리면 안 되는 것
+      description: 변경 경계는 어디인가. 아래 보호 영역(docs/harness/SSOT.md 4절)에 이 작업만의 경계를 덧붙인다
+      value: |
+        - `docs/01-requirements.md`, `docs/06-architecture.md`
+        - `docs/harness/`, `AGENTS.md`, `CLAUDE.md`
+        - 검증 스크립트 (`npm run verify` 구성, `scripts/prepare-verify-db.ts`, `scripts/check-architecture.ts`, `.github/workflows/verify.yml`)
+        -
+    validations:
+      required: true
+
+  - type: dropdown
+    id: max-loops
+    attributes:
+      label: 6. 구현 루프 최대 횟수
+      description: 몇 번까지 재시도하는가. 넘으면 멈추고 사람에게 보고한다
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "5"
+    validations:
+      required: true

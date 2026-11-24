@@ -19,7 +19,7 @@ npm run verify
 | 2   | Types        | `npm run typecheck`      | TypeScript 타입 에러 0                 |
 | 3   | Lint         | `npm run lint`           | ESLint(`eslint-config-next`) 에러 0  |
 | 4   | Architecture | `npm run check:arch`     | 재고 변경이 `applyMovement()`만 거친다 (3절) |
-| 5   | Test         | `vitest run`             | `tests/`의 자동 테스트 전부 통과             |
+| 5   | Test         | `vitest run`             | `tests/`의 자동 테스트 전부 통과 (Issue 판정 테스트 포함, 4절) |
 | 6   | Build        | `npm run build`          | 프로덕션 빌드 성공                         |
 
 단계를 하나만 따로 돌려도 되지만, 통과 판정은 `npm run verify` 전체 결과로만 한다.
@@ -53,7 +53,25 @@ npm run verify
 
 ---
 
-## 4. 실행 위치
+## 4. Issue 판정 테스트
+
+Issue의 종료 조건은 테스트로 판정한다.
+
+| 항목    | 규칙                                                                |
+| ----- | ----------------------------------------------------------------- |
+| 위치    | `tests/issues/issue-{Issue 번호}-{기능명}.test.ts`                     |
+| 예시    | `tests/issues/issue-12-transfer-elapsed-days.test.ts`             |
+| 대응    | Issue의 "3. 종료 조건" 하나당 테스트 케이스 하나를 둔다                              |
+| 실행    | 별도 명령 없이 Test 단계(`vitest run`)가 함께 실행한다                           |
+| 완료 판정 | 해당 Issue의 판정 테스트가 있고, `npm run verify`가 exit 0일 때 그 Issue를 완료로 본다 |
+
+- 판정 테스트는 Issue 작업을 시작할 때 종료 조건을 보고 먼저 만든다.
+- 종료 조건이 바뀌면 Issue를 먼저 고친 뒤 판정 테스트를 맞춘다. 테스트만 바꿔서 종료 조건을 바꾸지 않는다.
+- Issue가 닫힌 뒤에도 판정 테스트는 지우지 않는다. 회귀 테스트로 남긴다.
+
+---
+
+## 5. 실행 위치
 
 | 위치                                              | 시점                 | 환경                                   |
 | ----------------------------------------------- | ------------------ | ------------------------------------ |
@@ -64,7 +82,7 @@ CI는 `.env` 없이 돈다. `DATABASE_URL`은 `verify.db`로, `SESSION_SECRET`�
 
 ---
 
-## 5. 판정과 보고
+## 6. 판정과 보고
 
 - **통과:** `npm run verify`가 exit 0. 이 결과 없이 "검증했다", "동작한다"고 보고하지 않는다.
 - **실패:** 실패한 단계 이름과 에러 출력을 그대로 보고한다. 실패를 통과처럼 요약하지 않는다.
@@ -73,7 +91,7 @@ CI는 `.env` 없이 돈다. `DATABASE_URL`은 `verify.db`로, `SESSION_SECRET`�
 
 ---
 
-## 6. 검증 규칙을 바꾸는 방법
+## 7. 검증 규칙을 바꾸는 방법
 
 검증 스크립트는 [SSOT](SSOT.md) 4절의 "검증 스크립트" 영역이다. **AI는 실행만 하고, 정책 변경은 사람이 승인한다.**
 
