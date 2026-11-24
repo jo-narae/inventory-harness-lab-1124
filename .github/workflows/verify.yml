@@ -1,0 +1,35 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # 검증 전용 DB (scripts/prepare-verify-db.ts 가 매번 새로 만든다)
+      DATABASE_URL: file:./prisma/verify.db
+      # CI 전용 더미 값. 실제 비밀이 아니다
+      SESSION_SECRET: ci-only-session-secret-not-used-in-production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Prepare → Types → Lint → Architecture → Test → Build
+      - run: npm run verify

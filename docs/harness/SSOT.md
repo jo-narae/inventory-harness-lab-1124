@@ -9,13 +9,13 @@
 
 ## 1. 원본 목록
 
-| 영역 | 원본 | 상태 |
-|---|---|---|
-| 재고 도메인 | [`docs/01-requirements.md`](../01-requirements.md) | 있음 |
-| 아키텍처 | [`docs/06-architecture.md`](../06-architecture.md) | 있음 |
-| 개별 작업 | 해당 GitHub Issue ([jo-narae/inventory-harness-lab-1124](https://github.com/jo-narae/inventory-harness-lab-1124/issues)) | 있음 |
-| 검증 규칙 | — | **추후 생성** (스크립트로 대체 예정) |
-| 구현·검증 루프 | — | **추후 생성** |
+| 영역       | 원본                                                                                                                     | 상태                      |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| 재고 도메인   | [`docs/01-requirements.md`](../01-requirements.md)                                                                     | 있음                      |
+| 아키텍처     | [`docs/06-architecture.md`](../06-architecture.md)                                                                     | 있음                      |
+| 개별 작업    | 해당 GitHub Issue ([jo-narae/inventory-harness-lab-1124](https://github.com/jo-narae/inventory-harness-lab-1124/issues)) | 있음                      |
+| 검증 규칙    | [`docs/harness/VerifyRule.md`](VerifyRule.md)                                                                          | 있음                      |
+| 루프 규칙    | —                                                                                                                      | **추후 생성**               |
 
 ---
 
@@ -42,11 +42,13 @@
 - 작업 중에 범위가 바뀌면 Issue를 고친다. 대화나 커밋 메시지에만 남기지 않는다.
 - Issue가 다른 원본과 충돌하면 [3. 충돌 정책](#3-충돌-정책)을 따른다.
 
-### 검증 규칙 — 추후 생성
+### 검증 규칙 — `docs/harness/VerifyRule.md`
 
-스크립트로 대체할 예정이다. 아직 없다.
+통과 기준(`npm run verify` exit 0), 검증 단계와 순서, 검증 환경, Architecture Check, 실행 위치(로컬·CI), 판정과 보고, 검증 규칙을 바꾸는 방법.
 
-### 구현·검증 루프 — 추후 생성
+- 변경사항이 "통과했다"고 말할 수 있는지에 대한 판단은 여기서 한다.
+
+### 루프 규칙 — 추후 생성
 
 작업을 어떻게 시작하고, 구현하고, 검증하고, 닫는지에 대한 절차. 아직 없다.
 
