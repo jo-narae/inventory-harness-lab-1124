@@ -20,6 +20,7 @@ const env = { ...process.env, DATABASE_URL: VERIFY_DB_URL }
 const run = (cmd: string) => execSync(cmd, { stdio: 'inherit', env })
 
 console.log('\n▸ 검증용 DB를 새로 만듭니다 (prisma/verify.db)\n')
+run('npx prisma generate') // src/generated 는 gitignore 대상 — 깨끗한 클론(CI)에서도 타입 검사가 돌도록
 run('npx prisma migrate deploy')
 run('npx tsx prisma/seed.ts')
 console.log('\n▸ 검증용 DB 준비 완료\n')
