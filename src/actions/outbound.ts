@@ -4,9 +4,27 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireUser, SessionExpiredError } from '@/lib/auth'
 import { applyMovement, InsufficientStockError } from '@/lib/stock'
-import { allocateFefo } from '@/lib/fefo'
+import { allocateFefo, type Allocation } from '@/lib/fefo'
+import { canOutboundByExpiry, MIN_OUTBOUND_REMAINING_DAYS } from '@/lib/expiry'
+import { daysUntil, formatDate } from '@/lib/date'
 import { MOVEMENT_TYPES, REASON_REQUIRES_NOTE, type ReasonCode } from '@/lib/constants'
 import type { SaveResult } from './inbound'
+
+/** 잔여 유통기한이 모자라 출고를 거부할 때 (Issue #3) */
+class ShortShelfLifeError extends Error {
+  constructor(lots: Allocation[]) {
+    const detail = lots
+      .map((a) => {
+        const days = daysUntil(a.expiryDate)
+        return `${formatDate(a.expiryDate)}, ${days < 0 ? `${-days}일 지남` : `${days}일 남음`}`
+      })
+      .join(' / ')
+    super(
+      `잔여 유통기한이 ${MIN_OUTBOUND_REMAINING_DAYS}일 미만인 재고는 출고할 수 없습니다 (${detail})`
+    )
+    this.name = 'ShortShelfLifeError'
+  }
+}
 
 /**
  * 출고 (S2)
@@ -55,6 +73,10 @@ export async function saveOutbound(input: {
             locationId: input.locationId,
             quantity: input.quantity,
           })
+
+      // 잔여 유통기한 검사 — 자동 배분·수동 선택 모두, 재고를 바꾸기 전에 한다 (Issue #3)
+      const shortLots = plan.filter((a) => !canOutboundByExpiry(a.expiryDate))
+      if (shortLots.length) throw new ShortShelfLifeError(shortLots)
 
       for (const a of plan) {
         await applyMovement(tx, {
