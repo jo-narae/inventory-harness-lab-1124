@@ -18,7 +18,7 @@
 | Next.js 16 API·규약                                                               | `node_modules/next/dist/docs/` (아래 관리 블록 참고)                                      |
 | 어느 문서가 원본인지                                                                     | `docs/harness/SSOT.md`                                                            |
 | 변경을 어떻게 검증하는지, 통과 기준, 검증 단계·환경, Architecture Check, CI, 검증 결과 보고 방법, 검증 스크립트 변경 | `docs/harness/VerifyRule.md`                                                      |
-| Issue 작업 루프 절차, 시도 횟수·상한, Issue 루프 기록, NEEDS_HUMAN 선언·응답·재개, 세션 복구        | `docs/harness/Loop.md`                                                            |
+| Issue 작업 루프 절차, 시도 횟수·상한, Issue 루프 기록, NEEDS_HUMAN 선언·응답·재개, 브랜치·커밋·PR, PR·CI 진입·복귀, 세션 복구 | `docs/harness/Loop.md`                                                            |
 
 질문이 두 종류에 걸치면 해당하는 원본을 각각 읽는다. 그 외의 원본은 읽지 않는다.
 
