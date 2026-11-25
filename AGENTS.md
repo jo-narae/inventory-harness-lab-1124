@@ -14,11 +14,12 @@
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | 재고 업무 규칙, 용어, 사유 체계, 기능 범위, 범위 제외, 완료 기준                                        | `docs/01-requirements.md`                                                         |
 | 폴더 구조, 데이터 모델, 핵심 로직(재고 변경·배분·정산), 상태 흐름, 인증, 시드, 아키텍처 결정                       | `docs/06-architecture.md`                                                         |
-| 특정 작업의 목적·범위·완료 조건                                                              | 해당 GitHub Issue — `gh issue view <번호> --repo jo-narae/inventory-harness-lab-1124 --comments`. Issue 작업을 할 때는 `docs/harness/Loop.md`도 함께 읽는다 |
+| 특정 작업의 목적·범위·완료 조건                                                              | 해당 GitHub Issue — `gh issue view <번호> --repo jo-narae/inventory-harness-lab-1124 --comments`. Issue 작업을 할 때는 `docs/harness/Loop.md`도 함께 읽는다. 사람에게 판단을 물어야 할 때는 `docs/harness/Decision.md`를 읽는다 |
 | Next.js 16 API·규약                                                               | `node_modules/next/dist/docs/` (아래 관리 블록 참고)                                      |
 | 어느 문서가 원본인지                                                                     | `docs/harness/SSOT.md`                                                            |
 | 변경을 어떻게 검증하는지, 통과 기준, 검증 단계·환경, Architecture Check, CI, 검증 결과 보고 방법, 검증 스크립트 변경 | `docs/harness/VerifyRule.md`                                                      |
-| Issue 작업 루프 절차, 시도 횟수·상한, Issue 루프 기록, NEEDS_HUMAN 선언·응답·재개, 브랜치·커밋·PR, PR·CI 진입·복귀, PR 최종 판정(승인·반려), 세션 복구 | `docs/harness/Loop.md`                                                            |
+| Issue 작업 루프 절차, 시도 횟수·상한, Issue 루프 기록, 브랜치·커밋·PR, PR·CI 진입·복귀, 반려 뒤 재작업, 세션 복구 | `docs/harness/Loop.md`                                                            |
+| 사람에게 판단을 묻는 규칙: NEEDS_HUMAN 사유·분류·요청·응답, PR 진입 응답(AI/사람), PR 최종 판정(승인·반려) 양식과 인정 조건 | `docs/harness/Decision.md`                                                        |
 
 질문이 두 종류에 걸치면 해당하는 원본을 각각 읽는다. 그 외의 원본은 읽지 않는다.
 
