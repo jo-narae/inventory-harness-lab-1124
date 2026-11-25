@@ -16,6 +16,7 @@
 | 개별 작업    | 해당 GitHub Issue ([jo-narae/inventory-harness-lab-1124](https://github.com/jo-narae/inventory-harness-lab-1124/issues)) | 있음                      |
 | 검증 규칙    | [`docs/harness/VerifyRule.md`](VerifyRule.md)                                                                          | 있음                      |
 | 루프 규칙    | [`docs/harness/Loop.md`](Loop.md)                                                                                      | 있음                      |
+| 사람 판단 규칙 | [`docs/harness/Decision.md`](Decision.md)                                                                            | 있음                      |
 
 ---
 
@@ -50,10 +51,18 @@
 
 ### 루프 규칙 — `docs/harness/Loop.md`
 
-Issue 작업을 시작해서 로컬 검증(`npm run verify`)을 통과하거나 멈출 때까지의 절차. 시작 점검, 시도 기준과 상한, Issue 코멘트로 남기는 루프 기록, `NEEDS_HUMAN` 선언 · 사람의 응답 · 재개, 세션이 바뀌었을 때 복구.
+Issue 작업을 시작해서 PR에서 최종 승인을 받거나 멈출 때까지의 절차. 시작 점검, 시도 기준과 상한, Issue 코멘트로 남기는 루프 기록, 사람 판단 지점에서 멈추고 답에 따라 상태를 바꾸는 것, 브랜치 · 커밋 · 푸시 · PR 최소 규칙, PR · CI 진입과 복귀, 반려 뒤 재작업, 세션이 바뀌었을 때 복구.
 
-- 통과 기준 자체는 검증 규칙(`VerifyRule.md`)이 정한다. 이 문서는 그 기준을 몇 번까지, 어떻게 기록하며 돌리는지만 정한다.
-- 커밋 · 푸시 · PR · CI, 브랜치 전략, Issue 닫기, 판정 테스트의 승인 · 보호는 아직 이 문서 범위 밖이다.
+- 통과 기준과 CI가 실행하는 것은 검증 규칙(`VerifyRule.md`)이 정한다. 이 문서는 그 기준을 몇 번까지, 어떻게 기록하며 돌리는지와 언제 PR · CI로 넘어가고 돌아오는지만 정한다.
+- 브랜치 규칙은 당분간 이 문서에 둔다. 복잡해지면 별도 원본으로 나눈다.
+- 사람에게 묻는 방법과 답의 인정은 사람 판단 규칙(`Decision.md`)이 정한다.
+- 머지, `main` 충돌 해소, Issue 닫기, 판정 테스트의 승인 · 보호는 아직 이 문서 범위 밖이다.
+
+### 사람 판단 규칙 — `docs/harness/Decision.md`
+
+루프 중에 에이전트가 사람에게 판단을 묻는 순간의 규칙. 결정 지점 세 곳(D1 `NEEDS_HUMAN`, D2 PR 진입, D3 PR 최종 판정)에서 무엇을, 어디서, 어떤 양식으로 묻고, 무엇을 사람의 답으로 인정하는지. `NEEDS_HUMAN` 사유와 판단형 · 실패형 분류.
+
+- 루프를 멈추는 것, 시도 횟수, 답에 따른 상태 전이는 루프 규칙(`Loop.md`)이 정한다.
 
 ---
 
