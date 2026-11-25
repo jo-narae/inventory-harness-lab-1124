@@ -26,3 +26,11 @@ export const EXPIRY_CLASS: Record<ExpiryStatus, string> = {
   SOON: 'bg-amber-bg text-amber',
   OK: 'bg-ok-bg text-ok',
 }
+
+/** 출고에 필요한 최소 잔여 유통기한 (Issue #3). 이 일수 미만이면 출고하지 않는다 */
+export const MIN_OUTBOUND_REMAINING_DAYS = 7
+
+/** 출고 기준일(서버의 오늘)에 이 로트를 출고할 수 있는가 */
+export function canOutboundByExpiry(expiryDate: Date): boolean {
+  return daysUntil(expiryDate) >= MIN_OUTBOUND_REMAINING_DAYS
+}
