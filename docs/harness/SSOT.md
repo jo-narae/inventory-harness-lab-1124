@@ -15,7 +15,7 @@
 | 아키텍처     | [`docs/06-architecture.md`](../06-architecture.md)                                                                     | 있음                      |
 | 개별 작업    | 해당 GitHub Issue ([jo-narae/inventory-harness-lab-1124](https://github.com/jo-narae/inventory-harness-lab-1124/issues)) | 있음                      |
 | 검증 규칙    | [`docs/harness/VerifyRule.md`](VerifyRule.md)                                                                          | 있음                      |
-| 루프 규칙    | —                                                                                                                      | **추후 생성**               |
+| 루프 규칙    | [`docs/harness/Loop.md`](Loop.md)                                                                                      | 있음                      |
 
 ---
 
@@ -48,9 +48,12 @@
 
 - 변경사항이 "통과했다"고 말할 수 있는지에 대한 판단은 여기서 한다.
 
-### 루프 규칙 — 추후 생성
+### 루프 규칙 — `docs/harness/Loop.md`
 
-작업을 어떻게 시작하고, 구현하고, 검증하고, 닫는지에 대한 절차. 아직 없다.
+Issue 작업을 시작해서 로컬 검증(`npm run verify`)을 통과하거나 멈출 때까지의 절차. 시작 점검, 시도 기준과 상한, Issue 코멘트로 남기는 루프 기록, `NEEDS_HUMAN` 선언 · 사람의 응답 · 재개, 세션이 바뀌었을 때 복구.
+
+- 통과 기준 자체는 검증 규칙(`VerifyRule.md`)이 정한다. 이 문서는 그 기준을 몇 번까지, 어떻게 기록하며 돌리는지만 정한다.
+- 커밋 · 푸시 · PR · CI, 브랜치 전략, Issue 닫기, 판정 테스트의 승인 · 보호는 아직 이 문서 범위 밖이다.
 
 ---
 
@@ -74,11 +77,11 @@
 
 | 영역 | 대상 | AI | 사람 |
 |---|---|---|---|
-| 애플리케이션 코드 | `src/`, `prisma/`, `scripts/` | Issue 범위 안에서 수정 | 최종 승인 |
+| 애플리케이션 코드 | `src/`, `prisma/`, `scripts/` (검증 스크립트 제외) | Issue 범위 안에서 수정 | 최종 승인 |
 | Issue별 테스트 | `tests/` | 작성 · 수정 | 전제 검토 |
 | 요구사항 · 아키텍처 | `docs/01-requirements.md`, `docs/06-architecture.md` | 읽기 | 변경 · 승인 |
 | 하네스 핵심 규칙 | `docs/harness/`, `AGENTS.md`, `CLAUDE.md` | 읽기 | 변경 · 승인 |
-| 검증 스크립트 | 추후 생성 | 실행 | 정책 변경 승인 |
+| 검증 스크립트 | [`VerifyRule.md`](VerifyRule.md) 7절의 대상 파일 | 실행 | 정책 변경 승인 |
 
 AI에게 "읽기"만 허용된 영역을 바꿔야 한다고 판단되면, 직접 고치지 않고 사람에게 변경을 요청한다.
 
